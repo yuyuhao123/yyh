@@ -13,6 +13,9 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const likePostsRouter = require('./routes/likeposts');
 const likeQuestionsRouter = require('./routes/likequestions');
+const postsRouter = require('./routes/posts');
+const questionsRouter = require('./routes/questions');
+const categoriesRouter = require('./routes/categories');
 
 
 
@@ -45,6 +48,9 @@ app.use('/auth', authRouter);
 // app.use('/users', userAuth, usersRouter);
 app.use('/likeposts', userAuth, likePostsRouter);
 app.use('/likequestions', userAuth, likeQuestionsRouter);
+app.use('/posts', postsRouter);
+app.use('/questions', questionsRouter);
+app.use('/categories', categoriesRouter);
 
 // 后台路由配置
 app.use('/admin/posts', adminAuth, adminPostsRouter);

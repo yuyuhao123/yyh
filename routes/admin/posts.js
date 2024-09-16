@@ -132,24 +132,24 @@ async function getPost(req) {
     const { id } = req.params;
 
     const post = await Post.findByPk(id, {
-        include: [
-            {
-                model: Post,
-                as: 'children', // 获取子评论
-                include: [
-                    {
-                        model: Post,
-                        as: 'children' // 递归获取多级评论
-                    }
-                ]
-            },
-            { model: User, as: 'user' },
-            { model: School, as: 'school' }
-        ]
         // include: [
+        //     {
+        //         model: Post,
+        //         as: 'children', // 获取子评论
+        //         include: [
+        //             {
+        //                 model: Post,
+        //                 as: 'children' // 递归获取多级评论
+        //             }
+        //         ]
+        //     },
         //     { model: User, as: 'user' },
         //     { model: School, as: 'school' }
         // ]
+        include: [
+            { model: User, as: 'user' },
+            { model: School, as: 'school' }
+        ]
     });
     if (!post) {
         throw new NotFoundError(`ID: ${id}的帖子未找到。`)

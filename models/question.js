@@ -60,7 +60,7 @@ module.exports = (sequelize, DataTypes) => {
         type: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            defaultValue: 1 // 默认值为 1经验贴 2考情分析 3其他
+            defaultValue: 1 // 默认值为 1选择题 2填空题 3判断题 4简答题 5大题
         },
         difficulty: {
             type: DataTypes.INTEGER, // 难度字段

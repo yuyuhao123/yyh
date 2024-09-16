@@ -187,6 +187,7 @@ function filterBody(req) {
     return {
         title: req.body.title,
         content: req.body.content,
+        user_id: req.body.user_id,
         category_id: req.body.category_id,
         parent_id: req.body.parent_id,
         likes_count: req.body.likes_count || 0, // 默认值为 0
