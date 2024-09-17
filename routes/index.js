@@ -9,19 +9,19 @@ const { success, failure } = require('../utils/responses');
  */
 router.get('/', async function (req, res) {
   try {
-    if (!req.user || !req.user.id) {
-      return res.status(401).json({ message: 'Unauthorized' });
-    }
-    const userId = req.user.id; // 假设用户信息存储在 req.user 中
-    const user = await User.findByPk(userId, {
-      include: [{ model: School, as: 'targetSchool' }] // 获取用户的目标学校
-    });
+    // if (!req.user || !req.user.id) {
+    //   return res.status(401).json({ message: 'Unauthorized' });
+    // }
+    // const userId = req.user.id; // 假设用户信息存储在 req.user 中
+    // const user = await User.findByPk(userId, {
+    //   include: [{ model: School, as: 'targetSchool' }] // 获取用户的目标学校
+    // });
 
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
+    // if (!user) {
+    //   return res.status(404).json({ message: 'User not found' });
+    // }
 
-    const targetSchoolId = user.target_school_id;
+    // const targetSchoolId = user.target_school_id;
 
     // 获取推荐的热门帖子
     const recommendedPosts = await Post.findAll({
@@ -53,22 +53,22 @@ router.get('/', async function (req, res) {
       limit: 5
     });
 
-    // 获取与当前用户考的学校相关的帖子
-    const schoolRelatedPosts = await Post.findAll({
-      where: {
-        school_id: targetSchoolId,
-        status: 'published'
-      },
-      order: [['createdAt', 'DESC']],
-      limit: 5
-    });
+    // // 获取与当前用户考的学校相关的帖子
+    // const schoolRelatedPosts = await Post.findAll({
+    //   where: {
+    //     school_id: targetSchoolId,
+    //     status: 'published'
+    //   },
+    //   order: [['createdAt', 'DESC']],
+    //   limit: 5
+    // });
 
     // 返回结果
     success(res, '查询首页数据成功。', {
       recommendedPosts,
       experiencePosts,
       analysisPosts,
-      schoolRelatedPosts
+      // schoolRelatedPosts
     });
   } catch (error) {
     console.error(error);
