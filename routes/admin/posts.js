@@ -69,7 +69,7 @@ router.get('/:id', async function (req, res) {
 router.post('/', async function (req, res) {
     try {
         const body = filterBody(req);
-        body.user_id = req.user.id;
+        body.user_id = 1;
 
         const post = await Post.create(body);
         success(res, '创建帖子成功。', { post }, 201);

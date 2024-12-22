@@ -42,6 +42,10 @@ module.exports = (sequelize, DataTypes) => {
   }
 
   User.init({
+    openid: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -86,8 +90,8 @@ module.exports = (sequelize, DataTypes) => {
         }
 
         // 检查长度
-        if (value.length < 6 || value.length > 45) {
-          throw new Error('密码长度必须是6 ~ 45之间。');
+        if (value.length < 2 || value.length > 450) {
+          throw new Error('密码长度必须是2 ~ 450之间。');
         }
 
         // 如果通过所有验证，进行hash处理并设置值

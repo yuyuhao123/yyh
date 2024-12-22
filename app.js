@@ -15,10 +15,10 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const likePostsRouter = require('./routes/likeposts');
 const likeQuestionsRouter = require('./routes/likequestions');
+const favoriteQuestionsRouter = require('./routes/favoritequestions');
 const postsRouter = require('./routes/posts');
 const questionsRouter = require('./routes/questions');
 const categoriesRouter = require('./routes/categories');
-
 
 
 // 后台路由文件
@@ -54,15 +54,16 @@ app.use('/', indexRouter);
 // app.use('/api/tab1', tab1Router);
 // app.use('/', userAuth, indexRouter);
 app.use('/auth', authRouter);
-app.use('/users', usersRouter);
-app.use('/likeposts', likePostsRouter);
-app.use('/likequestions', likeQuestionsRouter);
+app.use('/users', userAuth, usersRouter);
+app.use('/likeposts', userAuth, likePostsRouter);
+app.use('/rightquestions', userAuth, likeQuestionsRouter);
+app.use('/favoritequestions', userAuth, favoriteQuestionsRouter);
 app.use('/posts', postsRouter);
 app.use('/questions', questionsRouter);
-app.use('/categories', categoriesRouter);
+app.use('/categories', userAuth, categoriesRouter);
 
 // 后台路由配置
-app.use('/admin/posts', adminAuth, adminPostsRouter);
+app.use('/admin/posts', adminPostsRouter);
 app.use('/admin/categories', adminAuth, adminCategoriesRouter);
 app.use('/admin/users', adminAuth, adminUsersRouter);
 // app.use('/admin/userQuestions', adminAuth, adminUserQuestionsRouter);
@@ -70,7 +71,7 @@ app.use('/admin/postlikes', adminAuth, adminPostLikesRouter);
 app.use('/admin/postfavorites', adminAuth, adminPostFavoritesRouter);
 app.use('/admin/questionlikes', adminAuth, adminQuestionLikesRouter);
 app.use('/admin/questionfavorites', adminAuth, adminQuestionFavoritesRouter);
-app.use('/admin/questions', adminAuth, adminQuestionsRouter);
+app.use('/admin/questions', adminQuestionsRouter);
 app.use('/admin/schoolCategories', adminAuth, adminSchoolCategoriesRouter);
 app.use('/admin/schools', adminAuth, adminSchoolsRouter);
 app.use('/admin/auth', adminAuthRouter);

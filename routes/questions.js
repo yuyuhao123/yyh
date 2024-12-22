@@ -16,7 +16,8 @@ router.get('/', async function (req, res) {
     const offset = (currentPage - 1) * pageSize;
 
     const condition = {
-      attributes: { exclude: ['content'] },
+      attributes: {  },
+      // attributes: { exclude: ['content'] },
       order: [['id', 'DESC']],
       limit: pageSize,
       offset: offset,
@@ -40,6 +41,35 @@ router.get('/', async function (req, res) {
 });
 
 /**
+ * 递归获取多级评论并简化数据结构
+ */
+async function getComments(question) {
+  const children = await Question.findAll({
+    where: { parent_id: question.id },
+    include: [
+      { model: User, as: 'user', attributes: ['id', 'nickname', 'photo'] }
+    ]
+  });
+
+  return await Promise.all(children.map(async (child) => {
+    const childData = child.toJSON();
+    childData.children = await getComments(child);
+    return {
+      id: childData.id,
+      title: childData.title,
+      content: childData.content,
+      user: childData.user,
+      parent_id: childData.parent_id,
+      likes_count: childData.likes_count,
+      type: childData.type,
+      difficulty: childData.difficulty,
+      createdAt: childData.createdAt,
+      children: childData.children
+    };
+  }));
+}
+
+/**
  * 查询题目详情
  * GET /questions/:id
  */
@@ -47,32 +77,36 @@ router.get('/:id', async function (req, res) {
   try {
     const { id } = req.params;
 
-    // const question = await Question.findByPk(id);
     const question = await Question.findByPk(id, {
       include: [
-        {
-          model: Question,
-          as: 'children', // 获取子评论
-          include: [
-            {
-              model: Question,
-              as: 'children' // 递归获取多级评论
-            }
-          ]
-        },
-        { model: User, as: 'user' },
-        { model: Category, as: 'category'},
+        { model: User, as: 'user', attributes: ['id', 'nickname', 'photo'] }
       ]
     });
+
     if (!question) {
-      throw new NotFoundError(`ID: ${id}的题目未找到。`)
+      throw new NotFoundError(`ID: ${id}的题目未找到。`);
     }
 
-    success(res, '查询题目成功。', { question });
+    const questionData = question.toJSON();
+    questionData.children = await getComments(question);
+
+    const simplifiedQuestion = {
+      id: questionData.id,
+      title: questionData.title,
+      content: questionData.content,
+      user: questionData.user,
+      parent_id: questionData.parent_id,
+      likes_count: questionData.likes_count,
+      type: questionData.type,
+      difficulty: questionData.difficulty,
+      createdAt: questionData.createdAt,
+      children: questionData.children
+    };
+
+    success(res, '查询题目成功。', { question: simplifiedQuestion });
   } catch (error) {
     failure(res, error);
   }
 });
 
-
-module.exports = router; 
+module.exports = router;

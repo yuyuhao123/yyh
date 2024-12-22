@@ -9,6 +9,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER.UNSIGNED // 无符号
       },
+      openid: {
+        type: Sequelize.STRING,
+        allowNull: true, // 允许为空
+      },
       email: {
         type: Sequelize.STRING,
         allowNull: false, // 不允许为空

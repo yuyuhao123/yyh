@@ -6,7 +6,7 @@ const {
 module.exports = (sequelize, DataTypes) => {
     const Post = sequelize.define('Post', {
         title: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false
         },
         content: {
