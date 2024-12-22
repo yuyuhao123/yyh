@@ -4,7 +4,7 @@ const { User } = require('../../models');
 const { Op } = require('sequelize');
 const { NotFoundError } = require('../../utils/errors');
 const { success, failure } = require('../../utils/responses');
-const bcrypt = require('bcrypt');
+const bcryptjs = require('bcryptjs');
 
 /**
  * 查询用户列表
@@ -65,7 +65,7 @@ router.get('/:id', async function (req, res) {
 router.post('/', async function (req, res) {
     try {
         const body = filterBody(req);
-        // body.password = await bcrypt.hash(body.password, 10); // 加密密码
+        // body.password = await bcryptjs.hash(body.password, 10); // 加密密码
 
         const user = await User.create(body);
         success(res, '创建用户成功。', { user }, 201);
@@ -106,7 +106,7 @@ router.put('/:id', async function (req, res) {
         const body = filterBody(req);
 
         // if (body.password) {
-        //     body.password = await bcrypt.hash(body.password, 10); // 加密密码
+        //     body.password = await bcryptjs.hash(body.password, 10); // 加密密码
         // }
 
         await user.update(body);

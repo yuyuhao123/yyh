@@ -3,7 +3,7 @@ const router = express.Router();
 const { User } = require('../models');
 const { success, failure } = require('../utils/responses');
 const { BadRequestError, NotFoundError } = require("../utils/errors");
-const bcrypt = require('bcrypt');
+const bcryptjs = require('bcryptjs');
 
 /**
  * 查询当前登录用户详情
@@ -67,7 +67,7 @@ router.put('/account', async function (req, res) {
     const user = await getUser(req, true);
 
     // 验证当前密码是否正确
-    const isPasswordValid = bcrypt.compareSync(body.current_password, user.password);
+    const isPasswordValid = bcryptjs.compareSync(body.current_password, user.password);
     if (!isPasswordValid) {
       throw new BadRequestError('当前密码不正确。');
     }

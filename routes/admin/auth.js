@@ -4,7 +4,7 @@ const { User } = require('../../models');
 const { Op } = require('sequelize');
 const { BadRequestError, UnauthorizedError, NotFoundError } = require('../../utils/errors');
 const { success, failure } = require('../../utils/responses');
-const bcrypt = require('bcrypt');
+const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 /**
@@ -39,7 +39,7 @@ router.post('/sign_in', async (req, res) => {
         }
 
         // 验证密码
-        const isPasswordValid = await bcrypt.compare(password, user.password);
+        const isPasswordValid = await bcryptjs.compare(password, user.password);
         if (!isPasswordValid) {
             throw new UnauthorizedError('密码错误。');
         }

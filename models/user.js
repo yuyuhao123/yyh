@@ -1,6 +1,6 @@
 'use strict';
 const { Model } = require('sequelize');
-const bcrypt = require('bcrypt');
+const bcryptjs = require('bcryptjs');
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
@@ -95,7 +95,7 @@ module.exports = (sequelize, DataTypes) => {
         }
 
         // 如果通过所有验证，进行hash处理并设置值
-        this.setDataValue('password', bcrypt.hashSync(value, 10));
+        this.setDataValue('password', bcryptjs.hashSync(value, 10));
       }
     },
     nickname: {

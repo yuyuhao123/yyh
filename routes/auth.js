@@ -4,7 +4,7 @@ const axios = require('axios');
 const { User } = require('../models');
 const { success, failure } = require('../utils/responses');
 const { NotFoundError, BadRequestError, UnauthorizedError } = require("../utils/errors");
-const bcrypt = require('bcrypt');
+const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { Op } = require("sequelize");
 
@@ -41,7 +41,7 @@ router.post('/wechat_login', async (req, res) => {
                 email: '123456@qq.com', // 使用默认邮箱
                 username: `user_${openid}`, // 生成一个默认用户名
                 nickname: nickName || `用户_${openid}`, // 使用微信昵称
-                password: bcrypt.hashSync('12345678', 10), // 使用默认密码
+                password: bcryptjs.hashSync('12345678', 10), // 使用默认密码
                 sex: gender || 2, // 使用微信性别，默认值为2
                 photo: avatarUrl, // 存储头像 URL
                 role: 0 // 默认角色
@@ -118,7 +118,7 @@ router.post('/sign_in', async (req, res) => {
         }
 
         // 验证密码
-        const isPasswordValid = bcrypt.compareSync(password, user.password);
+        const isPasswordValid = bcryptjs.compareSync(password, user.password);
         if (!isPasswordValid) {
             throw new UnauthorizedError('密码错误。');
         }

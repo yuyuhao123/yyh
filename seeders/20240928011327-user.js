@@ -1,6 +1,6 @@
 'use strict';
 
-const bcrypt = require('bcrypt');
+const bcryptjs = require('bcryptjs');
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -9,7 +9,7 @@ module.exports = {
       {
         email: 'admin1@example.com',
         username: 'admin1',
-        password: bcrypt.hashSync('password123', 10), // 使用 bcrypt 进行密码哈希处理
+        password: bcryptjs.hashSync('password123', 10), // 使用 bcryptjs 进行密码哈希处理
         nickname: '管理员1',
         sex: 0,
         role: 1, // 管理员
@@ -24,7 +24,7 @@ module.exports = {
       {
         email: 'user1@example.com',
         username: 'user1',
-        password: bcrypt.hashSync('password123', 10),
+        password: bcryptjs.hashSync('password123', 10),
         nickname: '普通用户1',
         sex: 1,
         role: 0, // 普通用户
@@ -39,7 +39,7 @@ module.exports = {
       {
         email: 'admin2@example.com',
         username: 'admin2',
-        password: bcrypt.hashSync('password123', 10),
+        password: bcryptjs.hashSync('password123', 10),
         nickname: '管理员2',
         sex: 0,
         role: 1,
@@ -54,7 +54,7 @@ module.exports = {
       {
         email: 'user2@example.com',
         username: 'user2',
-        password: bcrypt.hashSync('password123', 10),
+        password: bcryptjs.hashSync('password123', 10),
         nickname: '普通用户2',
         sex: 1,
         role: 0,
@@ -69,7 +69,7 @@ module.exports = {
       {
         email: 'admin3@example.com',
         username: 'admin3',
-        password: bcrypt.hashSync('password123', 10),
+        password: bcryptjs.hashSync('password123', 10),
         nickname: '管理员3',
         sex: 0,
         role: 1,
@@ -84,7 +84,7 @@ module.exports = {
       {
         email: 'user3@example.com',
         username: 'user3',
-        password: bcrypt.hashSync('password123', 10),
+        password: bcryptjs.hashSync('password123', 10),
         nickname: '普通用户3',
         sex: 1,
         role: 0,
