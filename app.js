@@ -31,7 +31,7 @@ const adminPostFavoritesRouter = require('./routes/admin/postfavorites');
 const adminQuestionLikesRouter = require('./routes/admin/questionlikes');
 const adminQuestionFavoritesRouter = require('./routes/admin/questionfavorites');
 const adminQuestionsRouter = require('./routes/admin/questions');
-const adminSchoolCategoriesRouter = require('./routes/admin/schoolCategories');
+const adminSchoolCategoriesRouter = require('./routes/admin/schoolcategories');
 const adminSchoolsRouter = require('./routes/admin/schools');
 const adminAuthRouter = require('./routes/admin/auth')
 
